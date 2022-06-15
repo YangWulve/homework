@@ -1,0 +1,49 @@
+3
+	\ì^s  ?               @   s(   d dl mZmZmZ G dd? de?ZdS )?    )?QtCore?QtGui?QtWidgetsc               @   s   e Zd Zdd? Zdd? ZdS )?Ui_MainWindowc             C   s?  |j d? |jdd? tj|?| _| jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jjd? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jjd? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd ? |jd!? |jd? |jd? | jj|? | jj d"? |j| j? tj|?| _| jjtj	d#d#dd?? | jj d$? |j| j? tj|?| _| jj d%? |j | j? | j!|? tj"j#|? d S )&N?MainWindowi?  i?  ?centralwidgetéP   én   éG   ?   u   åæ–‡æ¥·ä½“?   TéK   ?labeléª   ?label_2éx   é«   ?   ? ?lineEdité´   ?lineEdit_2éú   ?   ?pushButtoni  ?pushButton_2é–   ?   é—   ?   u   åæ–‡å½©äº‘?   ?label_3r   ?menubar?statusbar)$ZsetObjectName?resizer   ZQWidgetr   ZQLabelr   ZsetGeometryr   ZQRectr   ZQFontZ	setFamilyZsetPointSizeZsetBoldZ	setWeightZsetFontr   ?QLineEditr   ?setTextr   ZQPushButtonr   r   r!   ZsetCentralWidgetZQMenuBarr"   Z
+setMenuBarZ
+QStatusBarr#   ZsetStatusBar?retranslateUiZQMetaObjectZconnectSlotsByName)?selfr   Zfont? r)   õW   c:\Users\ssurf\Desktop\ä»£ç åŒ…\A-Email-Demo-master\A-Email-Demo-master\apps\idenfy.py?setupUi   s?    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+zUi_MainWindow.setupUic             C   sv   t jj}|j|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | j	j|dd?? d S )Nr   u   é‚®ç®±è´¦å·ï¼šu   æˆæƒå¯†ç ï¼šu   ç™»å½•u   å–æ¶ˆu   é‚®ç®±å®¢æˆ·ç«?
+r   ?QCoreApplication?translateZsetWindowTitler   r&   r   r   r   r!   )r(   r   Z
+_translater)   r)   r*   r'   a   s    zUi_MainWindow.retranslateUiN)?__name__?__module__?__qualname__r+   r'   r)   r)   r)   r*   r      s   Rr   N)?PyQt5r   r   r   ?objectr   r)   r)   r)   r*   ?<module>   s   

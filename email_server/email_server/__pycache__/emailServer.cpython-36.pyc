@@ -1,0 +1,66 @@
+3
+ ��^?  ?               @   s?  d dl Z d dlZd dlZd dlZd dlmZmZmZmZm	Z	m
+Z
+mZ d dlZd dlmZ d dlZd dlZd dlmZ d dlmZ d dlmZ d dlZd dlZd dlmZ d dlmZ d d	lmZ d d
+lmZ d dl m!Z! d dl"m#Z# d dl$Z%da&dddd?a'G dd? de(?Z)da*da+d a,G dd? de?Z-da.G dd? de?Z/G dd? de?Z0e1dk?r�ejj2ej3j4? eej5?Z6e/? Z7e0? Z8e7j9j:j;j<e8j=? e7j9j>j;j<ej?? e7j=?  ej@e6jA? ? dS )?    N)?QMessageBox?QLineEdit?QApplication?QMainWindow?QAbstractItemView?QTableWidgetItem?QFileDialog)?QCoreApplication)?Parser)?decode_header)?parseaddr)?MIMEText)?formataddr)?QtCore)?MIMEMultipart)?encoders)?MIMEBaseF)?pop3?user?passc               @   s6   e Zd Zdd? Zdd? Zdd? Zdd? Zdd
+d?Zd	S )?Email_Serverc             C   s*   |d | _ |d | _|d | _| j?  d S )Nr   r   r   )?user_mail?password?pop_server?Connect_Server)?self?user_dic? r   �\   C:\Users\ssurf\Desktop\代码包\A-Email-Demo-master\A-Email-Demo-master\apps\emailServer.py?__init__#   s    
+
+
+zEmail_Server.__init__c             C   s.   t j| j?| _| jj| j? | jj| j? d S )N)?poplib?POP3r   ?serverr   r   ?pass_r   )r   r   r   r   r   *   s    zEmail_Server.Connect_Serverc             C   s   | j j?  d S )N)r"   ?close)r   r   r   r   ?_close_0   s    zEmail_Server._close_c             C   s   | j j? \}}|S )N)r"   ?stat)r   ?email_num?email_sizer   r   r   ?Get_Email_Count4   s    zEmail_Server.Get_Email_CountNc             C   sp  | j j|?\}}}dj|?jd?}t? j|d?}|| _| jd }t|?d \}}	|	r^|j|	?}|| _t	d| j? t
+| jd ?\}
+}t|
+?d \}}	|	r�|j|	?}|| _|| _t	d||? t| jjd	??}|d d jd
+d?}t|?| _yr| jj? }|d j? }t	|? |d j? jd?d }ytj|?j|?}W n   tj|?jdd?}Y nX || _W n   d| _Y nX d S )Ns   
+?gbk)?text?Subjectr   u
+   标题�??Fromu   发送方: ?datez+00:00? ?base64?   ?ignore? ?���)r"   ?retr?join?decoder
+   ?parsestr?msgr   ?email_title?printr   ?email_name?email_addr?get?replace?str?email_time?get_payload?get_content_charset?as_string?splitr0   ?b64decode?content)r   ?email_row?rsp?msglines?msgsiz?msg_contentr9   ?subject?value?charset?hdr?addr?namer.   ?utcstrrG   ?content_charsetr+   ?text_contentr   r   r   ?Get_Email_Data:   s@    
+
+
+
+
+
+zEmail_Server.Get_Email_Data)N)?__name__?__module__?__qualname__r   r   r%   r)   rV   r   r   r   r   r   "   s
+   r   r/   c               @   s,   e Zd Zdd? Zdd? Zdd? Zdd? Zd	S )
+?Send_emailc             C   sZ   t j| ? tj? | _| jj| ? | jjjj| j	? | jj
+jj| j? | jjjj| j? d S )N)r   r   ?smtp?Ui_MainWindow?send_ui?setupUi?pushButton_2?clicked?connectr$   ?pushButton?Send?ffliechose?showDialog)r   r   r   r   r   q   s    
+
+zSend_email.__init__c             C   sP   t j| dd?a| jjjtjjtd ?? da	t
+td ? t
+tjjtd ?? d S )Nz	Open file?.r   r1   )r   ?getOpenFileName?fnamer]   ?choosefile?setText?os?path?basename?cfiler;   )r   r   r   r   re   y   s
+    zSend_email.showDialogc             C   s?   yVdt jt jjd?d d ?  }d}| jjj? }| jjj? }| jjj? }| jjj	? }W n   t
+j| dd? Y nX tj| j||||||f? d S )Nzsmtp.?@r1   ?465?Messageu   填写完整信息)?mail_Serverr   ?findr]   ?lineEdit_4r+   ?lineEdit_5?lineEdit_6?textEdit?toPlainTextr   ?about?_thread?start_new_thread?Send_Email)r   ?smtp_server?smtp_port?send_name?recv_mail?send_title?send_textr   r   r   rc   ?   s    zSend_email.Sendc             C   s$  ?yt |dd?}t? }|j|? tr�ttd d?�T}	tdd?}
+|
+j|	j? ? |
+j	ddd	d
+t
+jjtd ?fd? tj|
+? |j|
+? W d Q R X t|tjg?|d< td|g?|d< ||d< tj|t|??}|jtjtj? |jtj|g|j? ? |j?  | jjjd? W n   | jjjd? Y nX d S )N?plainzutf-8r   ?rb?applicationzoctet-streamzContent-Disposition?attachmentr*   r/   )?filenamer-   u   川大?Tor,   u   发送成功！！！！u"   发送失败，SMTP或邮箱错�?r   r   ?attachrn   ?openrh   r   ?set_payload?read?add_headerrk   rl   rm   r   ?encode_base64r   rr   r   ?smtplib?SMTP_SSL?int?loginr   ?sendmailrD   ?quitr]   ?yesrj   )r   r}   r~   r   r�   r?   r?   rG   r9   ?fr?   r"   r   r   r   r|   ?   s*    
+
+"
+zSend_email.Send_EmailN)rW   rX   rY   r   re   rc   r|   r   r   r   r   rZ   p   s   	rZ   c               @   s<   e Zd Zdd? Zdd? Zdd? Zdd? Zd	d
+? Zdd? ZdS )?mainWinc             C   s|   t j| ? tj? | _| jj| ? | jjjj| j	? | jj
+jj| j? | jjjtj? | jjjj| j? | jjj? jd? d S )N�d   )r   r   r   r\   ?main_uir^   r_   r`   ra   rc   ?pushButton_4?Update?tableWidget?setSelectionBehaviorr   ?SelectRows?itemClicked?itemclickrw   ?document?setMaximumBlockCount)r   r   r   r   r   ?   s    
+
+zmainWin.__init__c             C   s   | j jj? j? }t|? | j jj|d?j? }| j jj|d?j? }| j jj|d?j? }| j jj|d?j? }| j jj|d?j? }| j jj?  | j j	j?  | j j
+j?  | j jj?  | j jj?  | j j	j|? | j j
+j|? | j jj|? | j jj|? t|?dk?r| j jjd? n| j jj|? d S )Nr   r1   ?   ?   ?   i?  r3   )r?   r?   ?currentIndex?rowr;   ?itemr+   rw   ?clear?lineEdit?lineEdit_2?lineEdit_3rt   rj   ?len?append)r   ?now_current_row?rowtitle?rowsender?etime?rowaddr?contentsr   r   r   r?   ?   s&    zmainWin.itemclickc             C   s&   t stj| dd? ntj| jf ? d S )Nrq   u   请先登录)?is_Idenfyr   ry   rz   r{   ?Upthread)r   r   r   r   r?   ?   s    zmainWin.Updatec             C   s?   | j jj? }xt|?D ]}| j jjd? qW tj? }|dkr�x�t||d d?D ]0}tj|? tj	| j
+tjtjtjtjtjf? qNW nBx@t|dd?D ]0}tj|? tj	| j
+tjtjtjtjtjf? q�W d S )Nr   ?   r1   r4   r4   )r?   r?   ?rowCount?range?removeRowrr   r)   rV   rz   r{   ?Displayr:   r<   r=   rG   rA   )r   ?allrownum?i?mail_countr   r   r   r?   ?   s    
+(
+zmainWin.Upthreadc             C   s?   | j jj? }| j jj|? | j jj|dt|?? | j jj|dt|?? | j jj|dtt|??? | j jj|dt|?? | j jj|dt|?? d S )Nr   r1   r?   r?   r?   )r?   r?   r?   ?insertRow?setItemr   r@   )r   ?titlerR   rQ   rG   r?   ?rrowr   r   r   r?   ?   s    zmainWin.Displayc             C   s8   t stj| dd? n t? atjjjtd ? tj	?  d S )Nrq   u   请先登录r   )
+r?   r   ry   rZ   ?sendUir]   ?label_8rj   r   ?show)r   r   r   r   rc   ?   s
+    zmainWin.SendN)	rW   rX   rY   r   r?   r?   r?   r?   rc   r   r   r   r   r?   ?   s   
+	r?   c               @   s   e Zd Zdd? Zdd? ZdS )?loginWinc             C   sX   t j| ? tj? | _| jj| ? | jjjj| j	? | jj
+jj| j? | jjjtj? d S )N)r   r   ?idenfyr\   ?login_uir^   r_   r`   ra   r$   rb   ?Loginr?   ?setEchoModer   ?Password)r   r   r   r   r     s    
+
+zloginWin.__init__c             C   s?   t d? t| jjj? ?td< t| jjj? ?td< dtd td jd?d d ?  td< y.tt?a	t d? t
+j| d	d
+? da| j?  W n0   t d? t
+j| ddt
+jt
+jB t
+j? Y nX d S )Nz	login....r   r   zpop.ro   r1   r   u   连接成功.......u   连接成功u   验证成功！Tu   pop验证失败！u   失败u   pop验证失败)r;   r@   r?   r?   r+   r   r?   rs   r   rr   r   ry   r?   r$   ?critical?Yes?No)r   r   r   r   r?     s    &zloginWin.LoginN)rW   rX   rY   r   r?   r   r   r   r   r?     s   r?   ?__main__)Br?   r   r[   ?sys?PyQt5.QtWidgetsr   r   r   r   r   r   r   rz   ?PyQt5.QtCorer	   r    r0   ?email.parserr
+   ?email.headerr   ?email.utilsr   ?datetimer?   ?email.mime.textr   r   ?PyQt5r   ?email.mime.multipartr   ?emailr   ?email.mime.baser   ?os.pathrk   r?   r   ?objectr   rr   rh   rn   rZ   r?   r?   r?   rW   ?setAttribute?Qt?AA_EnableHighDpiScaling?argv?app?ui?loginuir?   rb   r`   ra   r?   ?pushButton_3r?   ?exit?exec_r   r   r   r   ?<module>   sR   $KCO
+
+

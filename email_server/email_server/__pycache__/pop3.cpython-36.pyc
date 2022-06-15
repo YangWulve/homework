@@ -1,0 +1,95 @@
+3
+\�^['  ?               @   s(   d dl mZmZmZ G dd? de?ZdS )?    )?QtCore?QtGui?QtWidgetsc               @   s   e Zd Zdd? Zdd? ZdS )?Ui_MainWindowc             C   s?  |j d? |jdd? tj|?| _| jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd	? |jd
+? |jd? |jd? | jj|? | jj d? | jjd? | jjd? tj? }| jjd|? tj? }| jjd|? tj? }| jjd|? tj? }| jjd|? tj? }| jjd|? | jj? jd? tj| j?| _| jjtj	dd
+dd?? t
+j? }|jd? |jd? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd?? t
+j? }|jd
+? |jd? |jd? | jj|? | jj d? tj| j?| _| jjtj	dddd ?? t
+j? }|jd	? |jd!? |jd? |jd? | jj|? | jj d"? tj| j?| _| jjtj	dd#d$d?? t
+j? }|jd
+? |jd? |jd? | jj|? | jj d%? tj| j?| _| jjtj	dd#dd ?? t
+j? }|jd	? |jd!? |jd? |jd? | jj|? | jj d&? tj| j?| _| jjtj	dd'd(d?? t
+j? }|jd
+? |jd? |jd? | jj|? | jj d)? tj| j?| _| jjtj	dd'dd ?? t
+j? }|jd	? |jd!? |jd? |jd? | jj|? | jj d*? tj| j?| _ | j jtj	dd+dd?? t
+j? }|jd
+? |jd? |jd? | j j|? | j j d,? tj!| j?| _"| j"jtj	dd+dd?? t
+j? }|jd	? |jd!? |jd? |jd? | j"j|? | j"j d-? tj| j?| _#| j#jtj	dd.dd?? t
+j? }|jd
+? |jd? |jd? | j#j|? | j#j d/? tj| j?| _$| j$jtj	dd.dd ?? t
+j? }|jd	? |jd!? |jd? |jd? | j$j|? | j$j d0? tj%| j?| _&| j&jtj	dd1dd2?? t
+j? }|jd3? |jd!? |jd? |jd? | j&j|? | j&j d4? tj%| j?| _'| j'jtj	d5d6dd7?? t
+j? }|jd	? |jd!? |jd? |jd? | j'j|? | j'j d8? tj%| j?| _(| j(jtj	d9d6dd:?? t
+j? }|jd	? |jd!? |jd? |jd? | j(j|? | j(j d;? tj| j?| _)| j)jtj	d<d1d=d>?? t
+j? }|jd	? |jd!? |jd? |jd? | j)j|? | j)j*tj+j,? | j)j-tj+j.? | j)j d?? tj%| j?| _/| j/jtj	d
+d6dd:?? t
+j? }|jd	? |jd!? |jd? |jd? | j/j|? | j/j d@? |j0| j? tj1|?| _2| j2jtj	ddddA?? | j2j dB? tj3| j2?| _4| j4j dC? |j5| j2? tj6|?| _7| j7j dD? |j8| j7? | j2j9| j4j:? ? | j;|? tj<j=|? d S )EN?MainWindowi?  i?  ?centralwidget�Z   �z   iY  ��   u   华文楷体?   T�K   ?tableWidget?   r   ?   ?   ?   ?   �   i"  �   ?   u   华文彩云?   ?label?   i_  ?   ?   ?label_2?   ?   ?lineEditiy  ?   ?label_3?lineEdit_2i?  ?   ?label_4?lineEdit_3i?  ?label_5?textEditi?  ?label_6?lineEdit_4i@  ?   u   楷体?pushButton_4i|  �P   ?   ?pushButton_3��   ?   ?pushButton�   i  ?   ?label_7?pushButton_2?   ?menubar?menu?statusbar)>?setObjectName?resizer   ?QWidgetr   ZQTableWidgetr   ?setGeometryr   ?QRectr   ?QFont?setFamily?setPointSize?setBold?setWeight?setFontZsetColumnCountZsetRowCount?QTableWidgetItemZsetHorizontalHeaderItemZhorizontalHeaderZsetDefaultSectionSize?QLabelr   r   ?QLineEditr   r    r!   r#   r$   r%   Z	QTextEditr&   r'   r(   ?QPushButtonr*   r-   r0   r3   ZsetFocusPolicy?QtZNoFocus?setLayoutDirectionZLeftToRightr4   ?setCentralWidget?QMenuBarr6   ZQMenur7   ?setMenuBar?QStatusBarr8   ?setStatusBarZ	addActionZ
+menuAction?retranslateUi?QMetaObject?connectSlotsByName)?selfr   ?font?item? rU   �U   c:\Users\ssurf\Desktop\代码包\A-Email-Demo-master\A-Email-Demo-master\apps\pop3.py?setupUi   sh   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+zUi_MainWindow.setupUic             C   s�  t jj}|j|dd?? | jjd?}|j|dd?? | jjd?}|j|dd?? | jjd?}|j|dd?? | jjd?}|j|dd	?? | jjd
+?}|j|dd?? | jj|dd?? | jj|dd?? | j	j|dd?? | j
+j|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? | jj|dd?? d S )Nr   r   u   标题r   u   发送人昵称r   u   到达时间r   u   发送邮箱r   u   内容u   邮箱客户端u	   标题：u   发送者：u   发送邮箱：u	   正文：u	   时间：u   刷新信箱u   退出u   登录uK   正文不可显示图片，特殊字符，艺术字，否则显示为乱码u   发送邮件u	   收件�?r   ?QCoreApplication?translate?setWindowTitler   ZhorizontalHeaderItem?setTextr   r   r    r#   r%   r'   r*   r-   r0   r3   r4   r7   ZsetTitle)rR   r   ?_translaterT   rU   rU   rV   rO   ?   s0    zUi_MainWindow.retranslateUiN)?__name__?__module__?__qualname__rW   rO   rU   rU   rU   rV   r      s    8r   N)?PyQt5r   r   r   ?objectr   rU   rU   rU   rV   ?<module>   s   
